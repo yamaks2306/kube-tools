@@ -128,7 +128,7 @@ runs:
         if [ "${{ inputs.helm }}" == "latest" ]; then
             echo "version=$(curl -sL https://api.github.com/repos/helm/helm/releases/latest | jq -r '.tag_name' | sed -e 's/^v//')" >> $GITHUB_OUTPUT
         else
-            echo "version=${{ inputs.helm }}" $GITHUB_OUTPUT
+            echo "version=${{ inputs.helm }}" >> $GITHUB_OUTPUT
         fi
 
     - id: helm-cache
