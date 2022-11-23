@@ -48,9 +48,9 @@ runs:
       if: "${{ inputs.kubectl }}"
       run: |
         if [ "${{ inputs.kubectl }}" == "latest" ]; then
-            echo "::set-output name=version::$(curl -sL https://storage.googleapis.com/kubernetes-release/release/stable.txt | sed -e 's/^v//')"
+            echo "version=$(curl -sL https://storage.googleapis.com/kubernetes-release/release/stable.txt | sed -e 's/^v//')" >> $GITHUB_OUTPUT
         else
-            echo "::set-output name=version::${{ inputs.kubectl }}"
+            echo "version=${{ inputs.kubectl }}" >> $GITHUB_OUTPUT
         fi
 
     - id: kubectl-cache
@@ -74,9 +74,9 @@ runs:
       if: "${{ inputs.yq }}"
       run: |
         if [ "${{ inputs.yq }}" == "latest" ]; then
-            echo "::set-output name=version::$(curl -sL https://api.github.com/repos/mikefarah/yq/releases/latest | jq -r ".tag_name" | sed -e 's/^v//')"
+            echo "version=$(curl -sL https://api.github.com/repos/mikefarah/yq/releases/latest | jq -r ".tag_name" | sed -e 's/^v//')" >> $GITHUB_OUTPUT
         else
-            echo "::set-output name=version::${{ inputs.yq }}"
+            echo "version=${{ inputs.yq }}" >> $GITHUB_OUTPUT
         fi
 
     - id: yq-cache
@@ -101,9 +101,9 @@ runs:
       run: |
         if [ "${{ inputs.kustomize }}" == "latest" ]; then
             VER=$(curl -sL https://api.github.com/repos/kubernetes-sigs/kustomize/releases | jq -r 'sort_by(.tag_name) | last(.[].tag_name | select(. | test("^kustomize/.")))' | sed -e 's/^kustomize\/v//')
-            echo "::set-output name=version::$VER"
+            echo "version=$VER" >> $GITHUB_OUTPUT
         else
-            echo "::set-output name=version::${{ inputs.kustomize }}"
+            echo "version=${{ inputs.kustomize }}" >> $GITHUB_OUTPUT
         fi
 
     - id: kustomize-cache
@@ -126,9 +126,9 @@ runs:
       if: "${{ inputs.helm }}"
       run: |
         if [ "${{ inputs.helm }}" == "latest" ]; then
-            echo "::set-output name=version::$(curl -sL https://api.github.com/repos/helm/helm/releases/latest | jq -r '.tag_name' | sed -e 's/^v//')"
+            echo "version=$(curl -sL https://api.github.com/repos/helm/helm/releases/latest | jq -r '.tag_name' | sed -e 's/^v//')" >> $GITHUB_OUTPUT
         else
-            echo "::set-output name=version::${{ inputs.helm }}"
+            echo "version=${{ inputs.helm }}" $GITHUB_OUTPUT
         fi
 
     - id: helm-cache
@@ -152,9 +152,9 @@ runs:
       run: |
         if [ "${{ inputs.kubeseal }}" == "latest" ]; then
             VER=$(curl -sL https://api.github.com/repos/bitnami-labs/sealed-secrets/releases | jq -r 'sort_by(.tag_name) | last(.[].tag_name | select(. | test("^v.")))' | sed -e 's/^v//')
-            echo "::set-output name=version::$VER"
+            echo "version=$VER" >> $GITHUB_OUTPUT
         else
-            echo "::set-output name=version::${{ inputs.kubeseal }}"
+            echo "version=${{ inputs.kubeseal }}" >> $GITHUB_OUTPUT
         fi
 
     - id: kubeseal-cache
@@ -178,9 +178,9 @@ runs:
       if: "${{ inputs.kubeval }}"
       run: |
         if [ "${{ inputs.kubeval }}" == "latest" ]; then
-            echo "::set-output name=version::$(curl -sL https://api.github.com/repos/instrumenta/kubeval/releases/latest | jq -r ".tag_name" | sed -e 's/^v//')"
+            echo "version=$(curl -sL https://api.github.com/repos/instrumenta/kubeval/releases/latest | jq -r ".tag_name" | sed -e 's/^v//')" >> $GITHUB_OUTPUT
         else
-            echo "::set-output name=version::${{ inputs.kubeval }}"
+            echo "version=${{ inputs.kubeval }}" >> $GITHUB_OUTPUT
         fi
 
     - id: kubeval-cache
@@ -203,9 +203,9 @@ runs:
       if: "${{ inputs.conftest }}"
       run: |
         if [ "${{ inputs.conftest }}" == "latest" ]; then
-            echo "::set-output name=version::$(curl -sL https://api.github.com/repos/open-policy-agent/conftest/releases/latest | jq -r ".tag_name" | sed -e 's/^v//')"
+            echo "version=$(curl -sL https://api.github.com/repos/open-policy-agent/conftest/releases/latest | jq -r ".tag_name" | sed -e 's/^v//')" >> $GITHUB_OUTPUT
         else
-            echo "::set-output name=version::${{ inputs.conftest }}"
+            echo "version=${{ inputs.conftest }}" >> $GITHUB_OUTPUT
         fi
 
     - id: conftest-cache
@@ -229,9 +229,9 @@ runs:
       if: "${{ inputs.kubeaudit }}"
       run: |
         if [ "${{ inputs.kubeaudit }}" == "latest" ]; then
-            echo "::set-output name=version::$(curl -sL https://api.github.com/repos/Shopify/kubeaudit/releases/latest | jq -r ".tag_name" | sed -e 's/^v//')"
+            echo "version=$(curl -sL https://api.github.com/repos/Shopify/kubeaudit/releases/latest | jq -r ".tag_name" | sed -e 's/^v//')" >> $GITHUB_OUTPUT
         else
-            echo "::set-output name=version::${{ inputs.kubeaudit }}"
+            echo "version=${{ inputs.kubeaudit }}" >> $GITHUB_OUTPUT
         fi
 
     - id: kubeaudit-cache
@@ -255,9 +255,9 @@ runs:
       if: "${{ inputs.kubeconform }}"
       run: |
         if [ "${{ inputs.kubeconform }}" == "latest" ]; then
-            echo "::set-output name=version::$(curl -sL https://api.github.com/repos/yannh/kubeconform/releases/latest | jq -r ".tag_name" | sed -e 's/^v//')"
+            echo "version=$(curl -sL https://api.github.com/repos/yannh/kubeconform/releases/latest | jq -r ".tag_name" | sed -e 's/^v//')" >> $GITHUB_OUTPUT
         else
-            echo "::set-output name=version::${{ inputs.kubeconform }}"
+            echo "version=${{ inputs.kubeconform }}" >> $GITHUB_OUTPUT
         fi
 
     - id: kubeconform-cache
@@ -280,9 +280,9 @@ runs:
       if: "${{ inputs.kyverno }}"
       run: |
         if [ "${{ inputs.kyverno }}" == "latest" ]; then
-            echo "::set-output name=version::$(curl -sL https://api.github.com/repos/kyverno/kyverno/releases/latest | jq -r ".tag_name" | sed -e 's/^v//')"
+            echo "version::$(curl -sL https://api.github.com/repos/kyverno/kyverno/releases/latest | jq -r ".tag_name" | sed -e 's/^v//')" >> $GITHUB_OUTPUT
         else
-            echo "::set-output name=version::${{ inputs.kyverno }}"
+            echo "version::${{ inputs.kyverno }}" >> $GITHUB_OUTPUT
         fi
 
     - id: kyverno-cache
